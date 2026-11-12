@@ -26,13 +26,13 @@
     </nav>
   </main>
   <script>
-    // Shared links (ate10.com/dish/…, /u/…, /picks/…) open the app directly on an iPhone with Ate10 installed.
+    // Shared links (ate10.com/dish/…, /u/…, /picks/…, /lists/…) open the app directly on an iPhone with Ate10 installed.
     // Anyone who lands here instead (no app yet, or another device) gets a button that tries the app's own link.
     (function () {
-      var m = location.pathname.match(/^\/(dish|d|u|picks)\/([^/?#]+)/);
+      var m = location.pathname.match(/^\/(dish|d|u|picks|lists)\/([^/?#]+)/);
       if (!m) return;
       var kind = m[1] === "d" ? "dish" : m[1];
-      var what = { dish: "a dish", u: "a profile", picks: "a pick" }[kind];
+      var what = { dish: "a dish", u: "a profile", picks: "a pick", lists: "a list" }[kind];
       document.getElementById("line").textContent = "Someone shared " + what + " on Ate10. Open it in the app on your iPhone.";
       var open = document.getElementById("open");
       open.href = "social.ate://" + kind + "/" + m[2];

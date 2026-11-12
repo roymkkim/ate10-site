@@ -4,14 +4,33 @@
     "details": [
       {
         "appID": "5PDRS439BE.social.ate",
-        "appIDs": ["5PDRS439BE.social.ate"],
-        "components": [
-          { "/": "/dish/*" },
-          { "/": "/d/*" },
-          { "/": "/u/*" },
-          { "/": "/picks/*" }
+        "appIDs": [
+          "5PDRS439BE.social.ate"
         ],
-        "paths": ["/dish/*", "/d/*", "/u/*", "/picks/*"]
+        "components": [
+          {
+            "/": "/dish/*"
+          },
+          {
+            "/": "/d/*"
+          },
+          {
+            "/": "/u/*"
+          },
+          {
+            "/": "/picks/*"
+          },
+          {
+            "/": "/lists/*"
+          }
+        ],
+        "paths": [
+          "/dish/*",
+          "/d/*",
+          "/u/*",
+          "/picks/*",
+          "/lists/*"
+        ]
       }
     ]
   }
