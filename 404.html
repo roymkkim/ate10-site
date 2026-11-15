@@ -19,6 +19,7 @@
     <h1>Ate10</h1>
     <p id="line">This page isn't here.</p>
     <a id="open" class="open" href="/" hidden>Open in Ate10</a>
+    <p id="get" hidden><a href="https://apps.apple.com/us/app/ate10/id6818437642">Don't have Ate10? Get it free on the App Store</a></p>
     <nav>
       <a href="/">Home</a>
       <a href="/privacy.html">Privacy Policy</a>
@@ -37,6 +38,8 @@
       var open = document.getElementById("open");
       open.href = "social.ate://" + kind + "/" + m[2];
       open.hidden = false;
+      // Someone invited who hasn't got the app yet: the way to get it.
+      document.getElementById("get").hidden = false;
       document.title = "Ate10";
     })();
   </script>
