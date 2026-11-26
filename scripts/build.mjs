@@ -20,7 +20,10 @@ const KEY = "sb_publishable_oyaHq5pJIMTuMYhTv4ir7g_Zl7XrA0J";
 const APP_ID = "6818437642";
 const APP_URL = `https://apps.apple.com/us/app/ate10/id${APP_ID}`;
 // Apple's own badge, as Apple serves it for embedding (not redrawn or changed).
-const BADGE = "https://tools.applemarketingtools.com/api/badges/download-on-the-app-store/black/en-us?size=250x83";
+const BADGE = "https://toolbox.marketingtools.apple.com/api/v2/badges/download-on-the-app-store/black/en-us";
+const BADGE_DARK = "https://toolbox.marketingtools.apple.com/api/v2/badges/download-on-the-app-store/white/en-us";
+// Black on light pages, white on dark ones, as Apple's guidelines ask.
+const badge = () => `<picture><source srcset="${BADGE_DARK}" media="(prefers-color-scheme: dark)"><img src="${BADGE}" alt="Download on the App Store" width="120" height="40"></picture>`;
 
 // MARK: Data
 
@@ -115,7 +118,7 @@ ${extra}
 <body>
 <header class="bar">
   <a class="logo" href="${root}" aria-label="Ate10 home">ate<span class="ten">10</span></a>
-  <a class="store" href="${APP_URL}"><img src="${BADGE}" alt="Download on the App Store" width="120" height="40"></a>
+  <a class="store" href="${APP_URL}">${badge()}</a>
 </header>
 `;
 }
@@ -137,7 +140,7 @@ function foot(root) {
       <p id="m-when" class="when"></p>
       <div class="acts">
         <a id="m-maps" class="btn" target="_blank" rel="noopener">Directions</a>
-        <a class="store" href="${APP_URL}"><img src="${BADGE}" alt="Download on the App Store" width="120" height="40"></a>
+        <a class="store" href="${APP_URL}">${badge()}</a>
       </div>
     </div>
   </div>
@@ -239,7 +242,7 @@ function dishPage(d, more) {
   <p class="when">${avg != null ? `${label(avg)} average from ${rated.length} rating${rated.length === 1 ? "" : "s"} · ` : ""}Rated ${esc(month(p.at))}</p>
   <div class="acts">
     <a class="btn" href="${esc(maps(p))}" target="_blank" rel="noopener">Directions</a>
-    <a class="store" href="${APP_URL}"><img src="${BADGE}" alt="Download on the App Store" width="120" height="40"></a>
+    <a class="store" href="${APP_URL}">${badge()}</a>
   </div>
   ${d.posts.length > 1 ? `<h2>More photos</h2>${grid(d.posts.slice(1), root)}` : ""}
 </article>
