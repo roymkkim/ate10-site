@@ -118,14 +118,14 @@ ${extra}
 <body>
 <header class="bar">
   <a class="logo" href="${root}" aria-label="Ate10 home">ate<span class="ten">10</span></a>
-  <a class="store" href="${APP_URL}">${badge()}</a>
+  <a class="store" href="${APP_URL}" target="_blank" rel="noopener">${badge()}</a>
 </header>
 `;
 }
 
 function foot(root) {
   return `<footer class="foot">
-  <a href="${APP_URL}">Get Ate10</a>
+  <a href="${APP_URL}" target="_blank" rel="noopener">Get Ate10</a>
   <a href="${root}privacy.html">Privacy</a>
   <a href="${root}terms.html">Terms</a>
   <a href="${root}support.html">Support</a>
@@ -140,7 +140,7 @@ function foot(root) {
       <p id="m-when" class="when"></p>
       <div class="acts">
         <a id="m-maps" class="btn" target="_blank" rel="noopener">Directions</a>
-        <a class="store" href="${APP_URL}">${badge()}</a>
+        <a class="store" href="${APP_URL}" target="_blank" rel="noopener">${badge()}</a>
       </div>
     </div>
   </div>
@@ -242,7 +242,7 @@ function dishPage(d, more) {
   <p class="when">${avg != null ? `${label(avg)} average from ${rated.length} rating${rated.length === 1 ? "" : "s"} · ` : ""}Rated ${esc(month(p.at))}</p>
   <div class="acts">
     <a class="btn" href="${esc(maps(p))}" target="_blank" rel="noopener">Directions</a>
-    <a class="store" href="${APP_URL}">${badge()}</a>
+    <a class="store" href="${APP_URL}" target="_blank" rel="noopener">${badge()}</a>
   </div>
   ${d.posts.length > 1 ? `<h2>More photos</h2>${grid(d.posts.slice(1), root)}` : ""}
 </article>
