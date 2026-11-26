@@ -38,6 +38,59 @@
   var t;
   window.addEventListener("resize", function () { clearTimeout(t); t = setTimeout(layAll, 120); });
 
+  // MARK: Continuous corners
+  // The app's corners (SwiftUI's .continuous): a squircle, its curve easing into the straight edge instead of a
+  // circle's quarter meeting it at a kink. CSS only draws circular corners, so each tile, photo and sheet is clipped
+  // to the squircle drawn for its size (Figma's corner smoothing, 60%, the iOS look), redrawn when its size changes.
+
+  function corner(r, budget) {
+    var smoothing = 0.6, rad = Math.PI / 180;
+    r = Math.min(r, budget);
+    var p = Math.min((1 + smoothing) * r, budget);
+    if (p < (1 + smoothing) * r) smoothing = Math.max(0, p / r - 1);
+    var arc = 90 * (1 - smoothing);
+    var arcLen = Math.sin((arc / 2) * rad) * r * Math.SQRT2;
+    var alpha = (90 - arc) / 2, beta = 45 * smoothing;
+    var p3p4 = r * Math.tan((alpha / 2) * rad);
+    var c = p3p4 * Math.cos(beta * rad), d = c * Math.tan(beta * rad);
+    var b = (p - arcLen - c - d) / 3, a = 2 * b;
+    return { a: a, b: b, c: c, d: d, p: p, L: arcLen, r: r };
+  }
+
+  function squircle(w, h, radius) {
+    var k = corner(radius, Math.min(w, h) / 2), a = k.a, b = k.b, c = k.c, d = k.d, p = k.p, L = k.L, R = k.r;
+    var n = function (x) { return Math.round(x * 100) / 100; };
+    return ["M", n(w - p), 0,
+      "c", n(a), 0, n(a + b), 0, n(a + b + c), n(d), "a", n(R), n(R), 0, 0, 1, n(L), n(L), "c", n(d), n(c), n(d), n(b + c), n(d), n(a + b + c),
+      "L", n(w), n(h - p),
+      "c", 0, n(a), 0, n(a + b), n(-d), n(a + b + c), "a", n(R), n(R), 0, 0, 1, n(-L), n(L), "c", n(-c), n(d), n(-(b + c)), n(d), n(-(a + b + c)), n(d),
+      "L", n(p), n(h),
+      "c", n(-a), 0, n(-(a + b)), 0, n(-(a + b + c)), n(-d), "a", n(R), n(R), 0, 0, 1, n(-L), n(-L), "c", n(-d), n(-c), n(-d), n(-(b + c)), n(-d), n(-(a + b + c)),
+      "L", 0, n(p),
+      "c", 0, n(-a), 0, n(-(a + b)), n(d), n(-(a + b + c)), "a", n(R), n(R), 0, 0, 1, n(L), n(-L), "c", n(c), n(-d), n(b + c), n(-d), n(a + b + c), n(-d),
+      "Z"].join(" ");
+  }
+
+  var RADII = { tile: 28, hero: 38, sheet: 32 };
+  function shape(el) {
+    var r = RADII[el.dataset.sq], w = el.offsetWidth, h = el.offsetHeight;
+    if (!w || !h) return;
+    el.style.clipPath = "path('" + squircle(w, h, r) + "')";
+    el.style.borderRadius = "0";
+  }
+  var sized = "ResizeObserver" in window ? new ResizeObserver(function (list) { list.forEach(function (e) { shape(e.target); }); }) : null;
+  function continuous(root) {
+    Object.keys(RADII).forEach(function (cls) {
+      (root || document).querySelectorAll("." + cls).forEach(function (el) {
+        if (el.dataset.sq) return;
+        el.dataset.sq = cls;
+        shape(el);
+        if (sized) sized.observe(el);
+      });
+    });
+  }
+  continuous();
+
   // MARK: City chips: fade the edge that has more beyond it.
 
   document.querySelectorAll(".chips").forEach(function (row) {
