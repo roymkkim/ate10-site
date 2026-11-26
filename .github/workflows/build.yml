@@ -1,0 +1,40 @@
+# Rebuilds the public feed (index.html, city/, dish/, sitemap.xml) from the database and commits it, so GitHub
+# Pages serves the latest posts. Every 30 minutes on main; on site-build when the builder itself changes.
+name: Build feed
+
+on:
+  schedule:
+    - cron: "7,37 * * * *"
+  workflow_dispatch:
+  push:
+    branches: [main, site-build]
+    paths: ["scripts/**", "assets/**", ".github/workflows/build.yml"]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: build-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: node scripts/build.mjs
+      - name: Commit what changed
+        run: |
+          git add -A index.html city dish sitemap.xml
+          if git diff --cached --quiet; then
+            echo "No changes."
+            exit 0
+          fi
+          git config user.name "ate10-feed"
+          git config user.email "support@ate10.com"
+          git commit -m "Feed: rebuilt from the database"
+          git push
