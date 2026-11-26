@@ -8,11 +8,8 @@
   --paper: #f7f7f7; --ink: #1c1c1c; --ink2: #666; --ink3: #999; --white: #fff; --soft: #ebebea; --line: rgba(28,28,28,.1);
   --score-ink: #26161c; --gap: 8px; --edge: 16px;
 }
-@media (prefers-color-scheme: dark) {
-  :root { --paper: #111; --ink: #f4f4f4; --ink2: #999; --ink3: #777; --white: #1c1c1c; --soft: #262626; --line: rgba(244,244,244,.12); }
-}
 * { box-sizing: border-box; }
-html { -webkit-text-size-adjust: 100%; }
+html { -webkit-text-size-adjust: 100%; color-scheme: light; }   /* always light, as the app's look */
 body { margin: 0; background: var(--paper); color: var(--ink); font: 400 15px/1.45 "General Sans", -apple-system, "Segoe UI", sans-serif; }
 a { color: inherit; }
 img { display: block; }

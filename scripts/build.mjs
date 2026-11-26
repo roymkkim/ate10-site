@@ -21,9 +21,8 @@ const APP_ID = "6818437642";
 const APP_URL = `https://apps.apple.com/us/app/ate10/id${APP_ID}`;
 // Apple's own badge, as Apple serves it for embedding (not redrawn or changed).
 const BADGE = "https://toolbox.marketingtools.apple.com/api/v2/badges/download-on-the-app-store/black/en-us";
-const BADGE_DARK = "https://toolbox.marketingtools.apple.com/api/v2/badges/download-on-the-app-store/white/en-us";
-// Black on light pages, white on dark ones, as Apple's guidelines ask.
-const badge = () => `<picture><source srcset="${BADGE_DARK}" media="(prefers-color-scheme: dark)"><img src="${BADGE}" alt="Download on the App Store" width="120" height="40"></picture>`;
+// The site is always light, so always Apple's black badge.
+const badge = () => `<img src="${BADGE}" alt="Download on the App Store" width="120" height="40">`;
 
 // MARK: Data
 
@@ -99,6 +98,7 @@ function head({ title, description, path, image, root, extra = "", appArg }) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light">
 <title>${esc(title)}</title>
 <meta name="description" content="${esc(description)}">
 <link rel="canonical" href="${SITE}${path}">
