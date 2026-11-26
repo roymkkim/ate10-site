@@ -18,13 +18,9 @@ img { display: block; }
 .bar { position: sticky; top: 0; z-index: 10; display: flex; align-items: center; justify-content: space-between;
   padding: calc(env(safe-area-inset-top) + 10px) var(--edge) 10px; background: color-mix(in srgb, var(--paper) 88%, transparent);
   -webkit-backdrop-filter: saturate(1.4) blur(16px); backdrop-filter: saturate(1.4) blur(16px); border-bottom: 1px solid var(--line); }
-/* The app's wordmark (Wordmark, FeedView.swift) as its header draws it: "ate" in Zodiak at 22 x 1.2 and the 10 disc 14 x 1.2,
-   measured against the app: the disc sits above the x-height, just clear of the e (a browser line box starts lower than iOS's). */
-.logo { position: relative; display: inline-block; margin-right: 17px; font: 600 26.4px/26.4px "Zodiak", Georgia, serif; color: #000;
-  text-decoration: none; letter-spacing: 0; }
-.logo .ten { position: absolute; left: calc(100% + 0.2px); top: -5.2px; display: flex; align-items: center; justify-content: center;
-  width: 16.8px; height: 16.8px; border-radius: 50%; background: #1c1c1c; color: #fff; font: 600 11.8px/1 "General Sans", sans-serif;
-  letter-spacing: 0; font-variant-numeric: tabular-nums; padding-top: 0.5px; }
+/* The wordmark: the app's own shape (an SVG of the share card's lockup), "ate" 40.6px wide as the app's header draws it. */
+.logo { display: block; color: #000; line-height: 0; }
+.logo svg { display: block; width: 58.7px; height: 28.3px; }
 .store img { height: 40px; width: auto; }
 
 main { max-width: 1440px; margin: 0 auto; padding: 0 var(--edge) 40px; }
