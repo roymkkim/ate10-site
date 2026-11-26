@@ -34,6 +34,9 @@ async function load() {
 }
 
 const clean = (s) => String(s ?? "").replace(/\s+/g, " ").trim();
+// New York City's boroughs are one city, as in the app (FeedCities: a city takes in its own parts).
+const BOROUGHS = new Set(["brooklyn", "queens", "bronx", "the bronx", "staten island", "manhattan"]);
+const cityOf = (city, region) => (region === "NY" && BOROUGHS.has(clean(city).toLowerCase()) ? "New York" : clean(city));
 
 function tidy(rows) {
   return rows
@@ -43,7 +46,7 @@ function tidy(rows) {
       dish: r.dish_id,
       name: clean(r.name),
       place: clean(r.place),
-      city: clean(r.city),
+      city: cityOf(r.city, clean(r.region)),
       region: clean(r.region),
       hood: clean(r.neighborhood),
       lat: Number(r.lat),
