@@ -132,7 +132,7 @@ function foot(root) {
 </footer>
 <div class="modal" id="modal" hidden>
   <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="m-name">
-    <button class="x" type="button" aria-label="Close">&times;</button>
+    <button class="x" type="button" aria-label="Close"><svg viewBox="0 0 256 256" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M205.66,194.34a8,8,0,0,1-11.32,11.32L128,139.31,61.66,205.66a8,8,0,0,1-11.32-11.32L116.69,128,50.34,61.66A8,8,0,0,1,61.66,50.34L128,116.69l66.34-66.35a8,8,0,0,1,11.32,11.32L139.31,128Z"/></svg></button>
     <div class="m-photo"><img id="m-img" alt=""><span id="m-score" class="score big"></span></div>
     <div class="m-body">
       <h2 id="m-name"></h2>
@@ -177,7 +177,7 @@ function homePage(posts, cities) {
       root,
     }) +
     `<main>
-<section class="intro"><h1>What people are eating</h1><p>Dishes rated on Ate10, newest first.</p></section>
+<section class="intro"><h1>What people are eating</h1><p>Dishes rated on Ate10.</p></section>
 ${chips(cities, root)}
 ${grid(posts, root)}
 </main>

@@ -63,7 +63,7 @@
   var home = { url: location.href, title: document.title };
   var opened = false, lastTile = null;
 
-  function show(tile) {
+  function show(tile, keyboard) {
     var d = tile.dataset;
     img.src = d.photo;
     img.alt = d.name + " at " + d.place;
@@ -74,7 +74,8 @@
     maps.href = d.maps;
     modal.hidden = false;
     document.documentElement.style.overflow = "hidden";
-    modal.querySelector(".x").focus();
+    // Opened from the keyboard: focus moves to the close button. With a tap or click it doesn't (no ring on it).
+    if (keyboard) modal.querySelector(".x").focus({ preventScroll: true });
     lastTile = tile;
   }
 
@@ -82,14 +83,14 @@
     modal.hidden = true;
     document.documentElement.style.overflow = "";
     img.removeAttribute("src");
-    if (lastTile) lastTile.focus();
+    if (lastTile && document.activeElement && modal.contains(document.activeElement)) lastTile.focus({ preventScroll: true });
   }
 
   document.addEventListener("click", function (e) {
     var tile = e.target.closest && e.target.closest("a.tile");
     if (!tile || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
     e.preventDefault();
-    show(tile);
+    show(tile, e.detail === 0);
     history.pushState({ modal: true }, "", tile.href);
     document.title = tile.dataset.name + " at " + tile.dataset.place + " · Ate10";
     opened = true;
