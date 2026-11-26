@@ -109,7 +109,8 @@ function head({ title, description, path, image, root, extra = "", appArg }) {
 <meta property="og:description" content="${esc(description)}">
 <meta property="og:url" content="${SITE}${path}">
 ${image ? `<meta property="og:image" content="${esc(image)}">\n<meta name="twitter:card" content="summary_large_image">` : ""}
-<link rel="icon" href="${root}assets/icon.png">
+<link rel="icon" href="${root}favicon.ico" sizes="48x48">
+<link rel="icon" href="${root}assets/icon-192.png" type="image/png" sizes="192x192">
 <link rel="apple-touch-icon" href="${root}assets/icon.png">
 <link rel="preload" href="${root}fonts/GeneralSans-Medium.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="${root}assets/site.css">
