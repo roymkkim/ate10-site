@@ -38,6 +38,21 @@
   var t;
   window.addEventListener("resize", function () { clearTimeout(t); t = setTimeout(layAll, 120); });
 
+  // MARK: City chips: fade the edge that has more beyond it.
+
+  document.querySelectorAll(".chips").forEach(function (row) {
+    function edges() {
+      row.classList.toggle("more", row.scrollWidth - row.scrollLeft - row.clientWidth > 2);
+      row.classList.toggle("less", row.scrollLeft > 2);
+    }
+    // The picked city in view (a city page's chip may sit off the right edge).
+    var on = row.querySelector("[aria-current]");
+    if (on && on.offsetLeft + on.offsetWidth > row.clientWidth) row.scrollLeft = on.offsetLeft - 24;
+    row.addEventListener("scroll", edges, { passive: true });
+    window.addEventListener("resize", edges);
+    edges();
+  });
+
   // MARK: Modal
 
   var modal = document.getElementById("modal");
